@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>dttt2</title>
+</head>
+<body>
+<form class="p-5 d-flex" th:action="@{/calculate}" th:method="post" th:object="${matchingNetwork}">
+    <div class="d-flex flex-column">
+        <div class="d-flex mb-3">
+            <label for="Zin" class="fw-bold" style="width: 60px">Zin (Ω)</label>
+            <input th:field="*{zin}" type="text" class="form-control-sm" style="width: 80px" id="Zin">
+        </div>
+        <div class="d-flex mb-3">
+            <label for="RL" class="fw-bold" style="width: 60px">RL (Ω)</label>
+            <input  th:field="*{RL}" type="text" class="form-control-sm" style="width: 80px" id="RL">
+        </div>
+        <div class="d-flex mb-3">
+            <label for="F" class="fw-bold" style="width: 60px">F (Hz)</label>
+            <input th:field="*{f}" type="text" class="form-control-sm" style="width: 80px" id="F">
+        </div>
+        <div class="d-flex mb-3">
+            <label for="Q" class="fw-bold" style="width: 60px">Q</label>
+            <input  th:field="*{q}" type="text" class="form-control-sm" style="width: 80px" id="Q">
+        </div>
+        <div class="mb-3">
+            <label for="dc" style="width: 50px;" class="me-2 fw-bold">DC</label>
+            <select th:field="*{dc}" id="dc" style="width: 80px" class="form-control-sm">
+                <option selected value="FEED">feed</option>
+                <option value="BLOCK">block</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="typeModal" style="width: 50px;" class="me-2 fw-bold">Type</label>
+            <select th:field="*{type}" id="typeModal" style="width: 80px" class="form-control-sm">
+                <option selected value="L">L</option>
+                <option value="T">T</option>
+                <option value="PI">PI</option>
+            </select>
+        </div>
+        <button class="btn btn-dark" style="width: 120px" type="submit">Calculate</button>
+    </div>
+    <div class="d-flex justify-content-around" style="width: 400px" th:each="v : ${result}">
+        <div class="d-flex flex-column">
+            <img th:src="@{/{img}(img=${v.get('img')})}" alt="" class="mb-3"/>
+            <div th:each="v1 : ${v.entrySet()}">
+                <div th:if="${v1.getKey() != 'img'}" class="d-flex mb-3">
+                    <label class="fw-bold" style="width: 30px" th:text="${v1.getKey()}"></label>
+                    <input disabled th:value="${v1.getValue()}"
+                           type="text" class="form-control-sm" style="min-width: 80px"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
